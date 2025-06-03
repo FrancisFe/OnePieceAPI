@@ -1,18 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnePieceAPI.Models
+namespace OnePieceAPI.DTOs.Piratas
 {
-    public class Pirata
+    public class ActualizarPirataDto
     {
-        public int Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string Nombre { get; set; } = string.Empty;
+
         [MaxLength(400)]
         public string? Descripcion { get; set; }
+
+        [Range(0, int.MaxValue)]
         public int Recompensa { get; set; }
 
         public int? FrutaDelDiabloId { get; set; }
-        public FrutaDelDiablo? FrutaDelDiablo { get; set; }
     }
 }

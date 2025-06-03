@@ -19,6 +19,6 @@ namespace OnePieceAPI.Models
 
         [ForeignKey("PirataId")]
         public Pirata? Pirata { get; set; }
-        public int PirataId { get; set; }
+        public int? PirataId { get; set; }
     }
 }
