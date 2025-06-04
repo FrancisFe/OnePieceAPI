@@ -1,4 +1,6 @@
 using OnePieceAPI.Profiles;
+using OnePieceAPI.Services;
+using OnePieceAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(PirataProfile));
+builder.Services.AddScoped<IPirataService, PirataService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler();
+}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

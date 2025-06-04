@@ -4,16 +4,15 @@ namespace OnePieceAPI.DTOs.Piratas
 {
     public class ActualizarPirataDto
     {
-        [Required]
-        [MaxLength(50)]
+        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [StringLength(100, ErrorMessage = "El nombre no puede tener mas de 100 caracteres")]
         public string Nombre { get; set; } = string.Empty;
 
-        [MaxLength(400)]
+        [StringLength(500, ErrorMessage = "La descripción no puede exceder los 500 caracteres")]
         public string? Descripcion { get; set; }
-
-        [Range(0, int.MaxValue)]
-        public int Recompensa { get; set; }
-
+        [Range(0, long.MaxValue, ErrorMessage = "La recompensa debe ser un número positivo")]
+        public long Recompensa { get; set; }
+        [Required(ErrorMessage = "Debe indicarse una fruta del diablo")]
         public int? FrutaDelDiabloId { get; set; }
     }
 }

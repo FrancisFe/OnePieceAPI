@@ -10,7 +10,7 @@ namespace OnePieceAPI.Models
         public string Nombre { get; set; } = string.Empty;
         [MaxLength(400)]
         public string? Descripcion { get; set; }
-        public int Recompensa { get; set; }
+        public long Recompensa { get; set; }
 
         public int? FrutaDelDiabloId { get; set; }
         public FrutaDelDiablo? FrutaDelDiablo { get; set; }
