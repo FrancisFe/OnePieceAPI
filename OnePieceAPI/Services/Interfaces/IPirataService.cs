@@ -9,7 +9,6 @@ namespace OnePieceAPI.Services.Interfaces
         Task CreatePirataAsync(Pirata pirata);
         Task<Pirata?> UpdatePirataAsync(int id, Pirata pirata);
         Task<bool> DeletePirataAsync(int id);
-        Task<bool> SaveChangesAsync();
 
     }
 }

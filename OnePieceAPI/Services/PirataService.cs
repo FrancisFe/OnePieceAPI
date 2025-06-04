@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Data;
+using OnePieceAPI.Exceptions.FrutasDelDiablo;
+using OnePieceAPI.Exceptions.Piratas;
 using OnePieceAPI.Models;
 using OnePieceAPI.Services.Interfaces;
 
@@ -31,7 +33,7 @@ namespace OnePieceAPI.Services
                 var fruta = await _context.FrutasDelDiablo.FindAsync(pirata.FrutaDelDiabloId.Value);
                 if (fruta == null)
                 {
-                    throw new Exception("La fruta del diablo especificada no existe.");
+                    throw new FrutaNoEncontradaException(pirata.FrutaDelDiabloId.Value);
                 }
             }
             _context.Piratas.Add(pirata);
@@ -47,7 +49,7 @@ namespace OnePieceAPI.Services
             var pirataExistente = await _context.Piratas.FindAsync(id);
             if (pirataExistente == null)
             {
-                return null;
+                throw new PirataNoEncontradoException(id);
             }
             pirataExistente.Nombre = pirata.Nombre;
             pirataExistente.Descripcion = pirata.Descripcion;
@@ -62,16 +64,11 @@ namespace OnePieceAPI.Services
             var pirata = await _context.Piratas.FindAsync(id);
             if (pirata == null)
             {
-                return false;
+                throw new PirataNoEncontradoException(id);
             }
             _context.Piratas.Remove(pirata);
             await _context.SaveChangesAsync();
             return true;
-        }
-
-        public async Task<bool> SaveChangesAsync()
-        {
-            return await _context.SaveChangesAsync() > 0;
         }
 
        

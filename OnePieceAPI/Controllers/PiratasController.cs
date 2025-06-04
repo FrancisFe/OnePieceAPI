@@ -8,7 +8,7 @@ namespace OnePieceAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class PiratasController : Controller
+    public class PiratasController : ControllerBase
     {
         private readonly IPirataService _pirataService;
         private readonly IMapper _mapper;

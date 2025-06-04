@@ -1,6 +1,6 @@
 ﻿namespace OnePieceAPI.Services.Interfaces
 {
-    public class IFrutaDelDiabloService
+    public interface IFrutaDelDiabloService
     {
     }
 }
