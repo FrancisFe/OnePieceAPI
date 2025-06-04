@@ -12,7 +12,6 @@ namespace OnePieceAPI.DTOs.Piratas
         public string? Descripcion { get; set; }
         [Range(0, long.MaxValue, ErrorMessage = "La recompensa debe ser un número positivo")]
         public long Recompensa { get; set; }
-        [Required(ErrorMessage = "Debe indicarse una fruta del diablo")]
         public int? FrutaDelDiabloId { get; set; }
     }
 }

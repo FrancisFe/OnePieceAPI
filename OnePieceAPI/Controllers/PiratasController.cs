@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OnePieceAPI.DTOs.Piratas;
 using OnePieceAPI.Models;
-using OnePieceAPI.Services;
+using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Controllers
 {
@@ -10,9 +10,9 @@ namespace OnePieceAPI.Controllers
     [Route("api/[controller]")]
     public class PiratasController : Controller
     {
-        private readonly PirataService _pirataService;
+        private readonly IPirataService _pirataService;
         private readonly IMapper _mapper;
-        public PiratasController(PirataService pirataService, IMapper mapper)
+        public PiratasController(IPirataService pirataService, IMapper mapper)
         {
             _pirataService = pirataService ?? throw new ArgumentNullException(nameof(pirataService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

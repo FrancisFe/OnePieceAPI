@@ -8,17 +8,11 @@ namespace OnePieceAPI.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
+
         public string Nombre { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(50)]
+
         public string Tipo { get; set; } = string.Empty;
         [MaxLength(200)]
         public string? Descripcion { get; set; }
-
-        [ForeignKey("PirataId")]
-        public Pirata? Pirata { get; set; }
-        public int? PirataId { get; set; }
     }
 }

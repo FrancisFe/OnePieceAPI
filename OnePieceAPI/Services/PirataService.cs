@@ -26,6 +26,14 @@ namespace OnePieceAPI.Services
             {
                 throw new ArgumentNullException(nameof(pirata));
             }
+            if (pirata.FrutaDelDiabloId.HasValue)
+            {
+                var fruta = await _context.FrutasDelDiablo.FindAsync(pirata.FrutaDelDiabloId.Value);
+                if (fruta == null)
+                {
+                    throw new Exception("La fruta del diablo especificada no existe.");
+                }
+            }
             _context.Piratas.Add(pirata);
             await _context.SaveChangesAsync();
         }
