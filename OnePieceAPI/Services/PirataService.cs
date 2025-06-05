@@ -26,7 +26,7 @@ namespace OnePieceAPI.Services
         {
             if (pirata == null)
             {
-                throw new ArgumentNullException(nameof(pirata));
+                throw new PirataNoEncontradoException();
             }
             if (pirata.FrutaDelDiabloId.HasValue)
             {
@@ -44,7 +44,7 @@ namespace OnePieceAPI.Services
 
             if (pirata == null)
             {
-                throw new ArgumentNullException(nameof(pirata));
+                throw new PirataNoEncontradoException();
             }
             var pirataExistente = await _context.Piratas.FindAsync(id);
             if (pirataExistente == null)
@@ -64,7 +64,7 @@ namespace OnePieceAPI.Services
             var pirata = await _context.Piratas.FindAsync(id);
             if (pirata == null)
             {
-                throw new PirataNoEncontradoException(id);
+                return false;
             }
             _context.Piratas.Remove(pirata);
             await _context.SaveChangesAsync();
