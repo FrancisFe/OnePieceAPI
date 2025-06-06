@@ -2,7 +2,7 @@
 
 namespace OnePieceAPI.DTOs.FrutasDelDiablo
 {
-    public class CrearFrutaDelDiablo
+    public class ActualizarFrutaDelDiabloDto
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio")]
