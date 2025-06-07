@@ -5,51 +5,46 @@ namespace OnePieceAPI.Data
 {
     public static class SeedData
     {
-        public static void Inicializar(OnePieceContext context)
+        public static void Initialize(OnePieceContext context)
         {
-            // Aplica migraciones pendientes
-            context.Database.Migrate();
-
-            // Si ya hay piratas, no hace nada
-            if (context.Piratas.Any())
-                return;
-
-            // Seed de frutas del diablo
-            var frutas = new List<FrutaDelDiablo>
+            if (!context.FrutasDelDiablo.Any())
             {
-                new FrutaDelDiablo { Nombre = "Gomu Gomu no Mi", Tipo = "Paramecia", Descripcion = "Convierte el cuerpo en goma." },
-                new FrutaDelDiablo { Nombre = "Mera Mera no Mi", Tipo = "Logia", Descripcion = "Permite controlar el fuego." },
-                new FrutaDelDiablo { Nombre = "Hie Hie no Mi", Tipo = "Logia", Descripcion = "Permite congelar todo." }
-            };
+                var frutas = new List<FrutaDelDiablo>
+        {
+            new FrutaDelDiablo { Nombre = "Gomu Gomu no Mi", Tipo = "Paramecia", Descripcion = "Convierte el cuerpo en goma." },
+            new FrutaDelDiablo { Nombre = "Mera Mera no Mi", Tipo = "Logia", Descripcion = "Permite controlar el fuego." }
+        };
+                context.FrutasDelDiablo.AddRange(frutas);
+                context.SaveChanges();
+            }
 
-            context.FrutasDelDiablo.AddRange(frutas);
-            context.SaveChanges();
-
-            // Seed de piratas
-            var piratas = new List<Pirata>
+            if (!context.Piratas.Any())
             {
-                new Pirata {
+                var luffy = new Pirata
+                {
                     Nombre = "Monkey D. Luffy",
-                    Descripcion = "Capitán de los Sombrero de Paja.",
-                    Recompensa = 300000000,
-                    FrutaDelDiabloId = frutas[0].Id
-                },
-                new Pirata {
-                    Nombre = "Portgas D. Ace",
-                    Descripcion = "Comandante de los Piratas de Barbablanca.",
-                    Recompensa = 550000000,
-                    FrutaDelDiabloId = frutas[1].Id
-                },
-                new Pirata {
-                    Nombre = "Aokiji",
-                    Descripcion = "Ex-Almirante de la Marina.",
-                    Recompensa = 800000000,
-                    FrutaDelDiabloId = frutas[2].Id
-                }
-            };
+                    Recompensa = 150000000,
+                    FrutaDelDiabloId = context.FrutasDelDiablo.FirstOrDefault(f => f.Nombre == "Gomu Gomu no Mi")?.Id
+                };
 
-            context.Piratas.AddRange(piratas);
-            context.SaveChanges();
+                var ace = new Pirata
+                {
+                    Nombre = "Portgas D. Ace",
+                    Recompensa = 550000000,
+                    FrutaDelDiabloId = context.FrutasDelDiablo.FirstOrDefault(f => f.Nombre == "Mera Mera no Mi")?.Id
+                };
+
+                var zoro = new Pirata
+                {
+                    Nombre = "Roronoa Zoro",
+                    Recompensa = 320000000,
+                    FrutaDelDiabloId = null // No posee una fruta del diablo
+                };
+
+                context.Piratas.AddRange(luffy, ace, zoro);
+                context.SaveChanges();
+            }
         }
+
     }
 }

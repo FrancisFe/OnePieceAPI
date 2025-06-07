@@ -4,7 +4,6 @@ namespace OnePieceAPI.DTOs.FrutasDelDiablo
 {
     public class ActualizarFrutaDelDiabloDto
     {
-        public int Id { get; set; }
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [StringLength(100, ErrorMessage = "El nombre no puede tener mas de 100 caracteres")]
         public string Nombre { get; set; } = string.Empty;

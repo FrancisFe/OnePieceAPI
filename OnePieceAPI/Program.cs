@@ -15,7 +15,7 @@ builder.Services.AddAutoMapper(typeof(PirataProfile));
 
 
 builder.Services.AddScoped<IPirataService, PirataService>();
-
+builder.Services.AddScoped<IFrutaDelDiabloService, FrutaDelDiabloService>();
 
 
 builder.Services.AddDbContext<OnePieceContext>(options =>
@@ -44,6 +44,6 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<OnePieceContext>();
-    SeedData.Inicializar(context);
+    SeedData.Initialize(context);
 }
 app.Run();

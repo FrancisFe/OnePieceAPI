@@ -32,6 +32,10 @@ namespace OnePieceAPI.Controllers
             {
                 return NotFound();
             }
+            if(pirata.FrutaDelDiablo != null)
+            {
+                return Ok(_mapper.Map<PirataConFrutaDto>(pirata));
+            }
             return Ok(_mapper.Map<PirataDto>(pirata));
         }
         [HttpPost]

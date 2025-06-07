@@ -10,18 +10,24 @@ namespace OnePieceAPI.Services
     public class PirataService : IPirataService
     {
         private readonly OnePieceContext _context;
+
         public PirataService(OnePieceContext context)
         {
-           _context = context ?? throw new ArgumentNullException(nameof(context));
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
+
         public async Task<IEnumerable<Pirata>> GetAllPiratasAsync()
         {
             return await _context.Piratas.OrderBy(p => p.Nombre).ToListAsync();
         }
+
         public async Task<Pirata?> GetPirataAsync(int pirataId)
         {
-            return await _context.Piratas.Where(p => p.Id == pirataId).FirstOrDefaultAsync();
+            return await _context.Piratas
+                .Include(f => f.FrutaDelDiablo)
+                .FirstOrDefaultAsync(p => p.Id == pirataId);
         }
+
         public async Task CreatePirataAsync(Pirata pirata)
         {
             if (pirata == null)
@@ -39,9 +45,9 @@ namespace OnePieceAPI.Services
             _context.Piratas.Add(pirata);
             await _context.SaveChangesAsync();
         }
+
         public async Task<Pirata?> UpdatePirataAsync(int id, Pirata pirata)
         {
-
             if (pirata == null)
             {
                 throw new PirataNoEncontradoException();
@@ -59,6 +65,7 @@ namespace OnePieceAPI.Services
             await _context.SaveChangesAsync();
             return pirataExistente;
         }
+
         public async Task<bool> DeletePirataAsync(int id)
         {
             var pirata = await _context.Piratas.FindAsync(id);
@@ -70,7 +77,5 @@ namespace OnePieceAPI.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
-       
     }
 }
