@@ -18,9 +18,13 @@ namespace OnePieceAPI.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PirataDto>>> GetAllPiratas()
+        public async Task<ActionResult<IEnumerable<PirataDto>>> GetAllPiratas(int page = 1 , int pageSize = 5)
         {
-            var piratas = await _pirataService.GetAllPiratasAsync();
+            if(page <= 0 || pageSize <= 0)
+            {
+                return BadRequest("Los parámetros de paginación deben ser mayores que cero.");
+            }
+            var piratas = await _pirataService.GetAllPiratasAsync(page,pageSize);
             return Ok(_mapper.Map<IEnumerable<PirataDto>>(piratas));
         }
 

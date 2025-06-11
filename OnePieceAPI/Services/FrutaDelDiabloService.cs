@@ -13,9 +13,9 @@ namespace OnePieceAPI.Services
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<List<FrutaDelDiablo>> GetAllFrutasDelDiabloAsync()
+        public async Task<List<FrutaDelDiablo>> GetAllFrutasDelDiabloAsync(int page, int pageSize)
         {
-            return await _context.FrutasDelDiablo.OrderBy(f => f.Id).ToListAsync();
+            return await _context.FrutasDelDiablo.OrderBy(f => f.Id).Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<FrutaDelDiablo?> GetFrutaDelDiabloAsync(int frutaId)

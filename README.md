@@ -59,3 +59,17 @@ A continuación se listan los principales endpoints de la API:
 | POST   | /api/frutasdeldiablo            | Crear una nueva fruta                   |
 | PUT    | /api/frutasdeldiablo/{id}       | Actualizar una fruta existente          |
 | DELETE | /api/frutasdeldiablo/{id}       | Eliminar una fruta                      |
+
+### Ejemplo de respuesta - GET /api/piratas/1
+```json
+{
+  "id": 1,
+  "nombre": "Monkey D. Luffy",
+  "recompensa": 3000000000,
+  "frutaDelDiablo": "Gomu Gomu no Mi"
+}
+```
+
+##  Próximas funcionalidades
+- Gestión de tripulaciones
+- Filtros y búsquedas avanzadas

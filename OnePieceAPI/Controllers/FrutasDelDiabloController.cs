@@ -20,9 +20,13 @@ namespace OnePieceAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FrutaDelDiabloDto>>> GetAllFrutasDelDiablo()
+        public async Task<ActionResult<IEnumerable<FrutaDelDiabloDto>>> GetAllFrutasDelDiablo(int page = 1 , int pageSize = 5)
         {
-            var frutas = await _frutaDelDiabloService.GetAllFrutasDelDiabloAsync();
+            if(page <= 0 || pageSize <= 0)
+            {
+                return BadRequest("Los parámetros de paginación deben ser mayores que cero.");
+            }
+            var frutas = await _frutaDelDiabloService.GetAllFrutasDelDiabloAsync(page, pageSize);
             return Ok(_mapper.Map<IEnumerable<FrutaDelDiabloDto>>(frutas));
         }
 

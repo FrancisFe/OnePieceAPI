@@ -16,9 +16,9 @@ namespace OnePieceAPI.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Pirata>> GetAllPiratasAsync()
+        public async Task<IEnumerable<Pirata>> GetAllPiratasAsync(int page, int pageSize)
         {
-            return await _context.Piratas.OrderBy(p => p.Nombre).ToListAsync();
+            return await _context.Piratas.OrderBy(p => p.Nombre).Skip((page - 1 ) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<Pirata?> GetPirataAsync(int pirataId)
