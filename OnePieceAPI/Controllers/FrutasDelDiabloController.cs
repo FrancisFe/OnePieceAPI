@@ -11,11 +11,11 @@ namespace OnePieceAPI.Controllers
     [Route("api/[controller]")]
     public class FrutasDelDiabloController : ControllerBase
     {
-        private readonly IFrutaDelDiabloService _frutaDelDiabloService;
+        private readonly IFrutaDelDiabloRepository _frutaDelDiabloRepository;
         private readonly IMapper _mapper;
-        public FrutasDelDiabloController(IFrutaDelDiabloService frutaDelDiabloService, IMapper mapper)
+        public FrutasDelDiabloController(IFrutaDelDiabloRepository frutaDelDiabloRepository, IMapper mapper)
         {
-            _frutaDelDiabloService = frutaDelDiabloService ?? throw new ArgumentNullException(nameof(frutaDelDiabloService));
+            _frutaDelDiabloRepository = frutaDelDiabloRepository ?? throw new ArgumentNullException(nameof(frutaDelDiabloRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
@@ -26,14 +26,15 @@ namespace OnePieceAPI.Controllers
             {
                 return BadRequest("Los parámetros de paginación deben ser mayores que cero.");
             }
-            var frutas = await _frutaDelDiabloService.GetAllFrutasDelDiabloAsync(page, pageSize);
+            var frutas = await _frutaDelDiabloRepository.GetAllFrutasDelDiabloAsync(page, pageSize);
             return Ok(_mapper.Map<IEnumerable<FrutaDelDiabloDto>>(frutas));
         }
 
         [HttpGet("{frutaId}")]
         public async Task<ActionResult<FrutaDelDiabloDto?>> GetFrutaDelDiablo(int frutaId)
         {
-            var fruta = await _frutaDelDiabloService.GetFrutaDelDiabloAsync(frutaId);
+
+            var fruta = await _frutaDelDiabloRepository.GetFrutaDelDiabloAsync(frutaId);
             if (fruta == null)
             {
                 return NotFound();
@@ -49,7 +50,7 @@ namespace OnePieceAPI.Controllers
                 return BadRequest("Fruta del daiblo no puede ser null");
             }
             var nuevaFruta = _mapper.Map<FrutaDelDiablo>(frutaDelDiablo);
-            await _frutaDelDiabloService.CreateFrutaDelDiabloAsync(nuevaFruta);
+            await _frutaDelDiabloRepository.CreateFrutaDelDiabloAsync(nuevaFruta);
             return CreatedAtAction(nameof(GetFrutaDelDiablo), new { frutaId = nuevaFruta.Id }, nuevaFruta);
         }
         [HttpPut("{frutaId}")]
@@ -59,7 +60,7 @@ namespace OnePieceAPI.Controllers
             {
                 return BadRequest("Fruta del diablo no puede ser null");
             }
-            var frutaActualizada = await _frutaDelDiabloService.UpdateFrutaDelDiabloAsync(frutaId, _mapper.Map<FrutaDelDiablo>(frutaDelDiablo));
+            var frutaActualizada = await _frutaDelDiabloRepository.UpdateFrutaDelDiabloAsync(frutaId, _mapper.Map<FrutaDelDiablo>(frutaDelDiablo));
             if (frutaActualizada == null)
             {
                 return NotFound();
@@ -69,7 +70,7 @@ namespace OnePieceAPI.Controllers
         [HttpDelete("{frutaId}")]
         public async Task<ActionResult> DeleteFrutaDelDiablo(int frutaId)
         {
-            var frutaExistente = await _frutaDelDiabloService.DeleteFrutaDelDiabloAsync(frutaId);
+            var frutaExistente = await _frutaDelDiabloRepository.DeleteFrutaDelDiabloAsync(frutaId);
             if(frutaExistente == false)
             {
                 return NotFound();

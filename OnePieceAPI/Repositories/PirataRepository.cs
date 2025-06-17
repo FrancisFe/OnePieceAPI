@@ -7,11 +7,11 @@ using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Services
 {
-    public class PirataService : IPirataService
+    public class PirataRepository : IPirataRepository
     {
         private readonly OnePieceContext _context;
 
-        public PirataService(OnePieceContext context)
+        public PirataRepository(OnePieceContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }

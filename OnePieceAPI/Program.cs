@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Data;
+using OnePieceAPI.Middleware;
 using OnePieceAPI.Profiles;
 using OnePieceAPI.Services;
 using OnePieceAPI.Services.Interfaces;
@@ -12,10 +13,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(PirataProfile));
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
 
-builder.Services.AddScoped<IPirataService, PirataService>();
-builder.Services.AddScoped<IFrutaDelDiabloService, FrutaDelDiabloService>();
+builder.Services.AddScoped<IPirataRepository, PirataRepository>();
+builder.Services.AddScoped<IFrutaDelDiabloRepository, FrutaDelDiabloRepository>();
 
 
 builder.Services.AddDbContext<OnePieceContext>(options =>

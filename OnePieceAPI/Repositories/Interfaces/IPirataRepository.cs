@@ -2,7 +2,7 @@
 
 namespace OnePieceAPI.Services.Interfaces
 {
-    public interface IPirataService
+    public interface IPirataRepository
     {
         Task<IEnumerable<Pirata>> GetAllPiratasAsync(int page, int pageSize);
         Task<Pirata?> GetPirataAsync(int id);

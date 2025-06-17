@@ -2,7 +2,7 @@
 
 namespace OnePieceAPI.Services.Interfaces
 {
-    public interface IFrutaDelDiabloService
+    public interface IFrutaDelDiabloRepository
     {
         Task<List<FrutaDelDiablo>> GetAllFrutasDelDiabloAsync(int page, int pageSize);
         Task<FrutaDelDiablo?> GetFrutaDelDiabloAsync(int id);

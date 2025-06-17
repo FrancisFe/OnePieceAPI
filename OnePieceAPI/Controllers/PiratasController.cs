@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OnePieceAPI.DTOs.Piratas;
+using OnePieceAPI.Exceptions.Piratas;
 using OnePieceAPI.Models;
 using OnePieceAPI.Services.Interfaces;
 
@@ -10,11 +11,11 @@ namespace OnePieceAPI.Controllers
     [Route("api/[controller]")]
     public class PiratasController : ControllerBase
     {
-        private readonly IPirataService _pirataService;
+        private readonly IPirataRepository _pirataRepository;
         private readonly IMapper _mapper;
-        public PiratasController(IPirataService pirataService, IMapper mapper)
+        public PiratasController(IPirataRepository pirataRepository, IMapper mapper)
         {
-            _pirataService = pirataService ?? throw new ArgumentNullException(nameof(pirataService));
+            _pirataRepository = pirataRepository ?? throw new ArgumentNullException(nameof(pirataRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         [HttpGet]
@@ -24,43 +25,49 @@ namespace OnePieceAPI.Controllers
             {
                 return BadRequest("Los parámetros de paginación deben ser mayores que cero.");
             }
-            var piratas = await _pirataService.GetAllPiratasAsync(page,pageSize);
+            var piratas = await _pirataRepository.GetAllPiratasAsync(page,pageSize);
             return Ok(_mapper.Map<IEnumerable<PirataDto>>(piratas));
         }
 
         [HttpGet("{pirataId}")]
         public async Task<ActionResult<PirataDto?>> GetPirata(int pirataId)
         {
-            var pirata = await _pirataService.GetPirataAsync(pirataId);
-            if (pirata == null)
+            try
             {
-                return NotFound();
+                var pirata = await _pirataRepository.GetPirataAsync(pirataId);
+
+                if (pirata!.FrutaDelDiablo != null)
+                {
+                    return Ok(_mapper.Map<PirataConFrutaDto>(pirata));
+                }
+                return Ok(_mapper.Map<PirataDto>(pirata));
             }
-            if(pirata.FrutaDelDiablo != null)
+            catch(PirataNoEncontradoException ex)
             {
-                return Ok(_mapper.Map<PirataConFrutaDto>(pirata));
+                return NotFound(ex.Message);
             }
-            return Ok(_mapper.Map<PirataDto>(pirata));
+
         }
         [HttpPost]
-        public async Task<ActionResult<Pirata>> CreatePirata([FromBody]CrearPirataDto pirata)
+        public async Task<ActionResult<PirataDto>> CreatePirata([FromBody]CrearPirataDto pirata)
         {
-            if(pirata == null)
+            if(pirata == null || !ModelState.IsValid)
             {
                 return BadRequest("Pirata no puede ser nulo.");
             }
             var nuevoPirata = _mapper.Map<Pirata>(pirata);
-            await _pirataService.CreatePirataAsync(nuevoPirata);
-            return CreatedAtAction(nameof(GetPirata), new { pirataId = nuevoPirata.Id }, nuevoPirata);
+            await _pirataRepository.CreatePirataAsync(nuevoPirata);
+            var pirataDto = _mapper.Map<PirataDto>(nuevoPirata);
+            return CreatedAtAction(nameof(GetPirata), new { pirataId = pirataDto.Id }, pirataDto);
         }
         [HttpPut("{pirataId}")]
-        public async Task<ActionResult<Pirata?>> UpdatePirata(int pirataId, [FromBody] ActualizarPirataDto pirata)
+        public async Task<ActionResult<PirataDto?>> UpdatePirata(int pirataId, [FromBody] ActualizarPirataDto pirata)
         {
-            if(pirata == null)
+            if(pirata == null || !ModelState.IsValid)
             {
                 return BadRequest("Pirata no puede ser nulo.");
             }
-            var pirataExistente = await _pirataService.UpdatePirataAsync(pirataId, _mapper.Map<Pirata>(pirata));
+            var pirataExistente = await _pirataRepository.UpdatePirataAsync(pirataId, _mapper.Map<Pirata>(pirata));
             if (pirataExistente == null)
             {
                 return NotFound();
@@ -70,7 +77,7 @@ namespace OnePieceAPI.Controllers
         [HttpDelete("{pirataId}")]
         public async Task<IActionResult> DeletePirata(int pirataId)
         {
-            var resultado = await _pirataService.DeletePirataAsync(pirataId);
+            var resultado = await _pirataRepository.DeletePirataAsync(pirataId);
             if (!resultado)
             {
                 return NotFound("Pirata no encontrado, no se puede borrar");

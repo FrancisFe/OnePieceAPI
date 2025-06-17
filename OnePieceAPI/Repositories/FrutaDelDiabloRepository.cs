@@ -6,10 +6,10 @@ using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Services
 {
-    public class FrutaDelDiabloService : IFrutaDelDiabloService
+    public class FrutaDelDiabloRepository : IFrutaDelDiabloRepository
     {
         private readonly OnePieceContext _context;
-        public FrutaDelDiabloService(OnePieceContext context)
+        public FrutaDelDiabloRepository(OnePieceContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -25,11 +25,16 @@ namespace OnePieceAPI.Services
 
         public async Task CreateFrutaDelDiabloAsync(FrutaDelDiablo frutaDelDiablo)
         {
-            if(frutaDelDiablo == null)
+            if (frutaDelDiablo == null)
             {
                 throw new ArgumentNullException(nameof(frutaDelDiablo));
             }
-            //VERIFICAR QUE NO EXISTA UNA FRUTA CON EL MISMO NOMBRE
+            var frutaExistente = await _context.FrutasDelDiablo
+                .FirstOrDefaultAsync(f => f.Nombre.ToLower() == frutaDelDiablo.Nombre.ToLower());
+           if(frutaExistente != null)
+            {
+                throw new FrutaYaExisteException(frutaDelDiablo.Nombre);
+            }
             _context.FrutasDelDiablo.Add(frutaDelDiablo);
             await _context.SaveChangesAsync();
         }
@@ -60,8 +65,13 @@ namespace OnePieceAPI.Services
             {
                 return false;
             }
-            /////////////VERIFICAR SI UN PIRATA LO TIENE
-            _context.FrutasDelDiablo.Remove(frutaExistente);
+            var pirataConFruta = await _context.Piratas
+                .FirstOrDefaultAsync(p => p.FrutaDelDiabloId == frutaId);
+            if(pirataConFruta != null)
+            {
+                throw new InvalidOperationException("No se puede eliminar la fruta porque está asignada a un pirata");
+            }
+                _context.FrutasDelDiablo.Remove(frutaExistente);
             await _context.SaveChangesAsync();
             return true;
         }
