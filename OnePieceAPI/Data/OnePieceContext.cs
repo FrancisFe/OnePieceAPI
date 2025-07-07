@@ -9,5 +9,6 @@ namespace OnePieceAPI.Data
         { }
         public DbSet<Pirata> Piratas { get; set; }
         public DbSet<FrutaDelDiablo> FrutasDelDiablo { get; set; }
+        public DbSet<Tripulacion> Tripulaciones { get; set; }
     }
 }

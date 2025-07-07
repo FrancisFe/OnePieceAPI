@@ -18,7 +18,7 @@ namespace OnePieceAPI.Controllers
             _pirataRepository = pirataRepository ?? throw new ArgumentNullException(nameof(pirataRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        [HttpGet]
+        [HttpGet]   
         public async Task<ActionResult<IEnumerable<PirataDto>>> GetAllPiratas(int page = 1 , int pageSize = 5)
         {
             if(page <= 0 || pageSize <= 0)

@@ -18,5 +18,9 @@ namespace OnePieceAPI.Models
 
         public int? FrutaDelDiabloId { get; set; }
         public FrutaDelDiablo? FrutaDelDiablo { get; set; }
+
+        public int? TripulacionId { get; set; }
+        public Tripulacion? Tripulacion { get; set; }
+
     }
 }
