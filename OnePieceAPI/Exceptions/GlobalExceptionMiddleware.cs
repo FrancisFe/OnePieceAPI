@@ -30,43 +30,41 @@ namespace OnePieceAPI.Middleware
 
         private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType = "application/json; charset=utf-8";
 
-            var response = new
-            {
-                error = new
-                {
-                    message = exception.Message,
-                    type = exception.GetType().Name
-                }
-            };
+            object response;
+            int statusCode;
 
             switch (exception)
             {
                 case BaseApiException apiEx:
-                    context.Response.StatusCode = apiEx.StatusCode;
+                    statusCode = apiEx.StatusCode;
                     response = new
                     {
                         error = new
                         {
                             message = apiEx.Message,
+                            code = apiEx.ErrorCode,
                             type = exception.GetType().Name
                         }
                     };
                     break;
+
                 default:
-                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    statusCode = (int)HttpStatusCode.InternalServerError;
                     response = new
                     {
                         error = new
                         {
                             message = "Ha ocurrido un error interno del servidor",
+                            code = "INTERNAL_SERVER_ERROR",
                             type = "InternalServerError"
                         }
                     };
                     break;
             }
 
+            context.Response.StatusCode = statusCode;
             var jsonResponse = JsonSerializer.Serialize(response);
             await context.Response.WriteAsync(jsonResponse);
         }

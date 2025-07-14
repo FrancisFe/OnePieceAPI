@@ -6,35 +6,41 @@ using OnePieceAPI.Services;
 using OnePieceAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
+/*
+Configuración de servicios
+ */
 
+//Controladores
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+//Swagger/OpenAPI
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Automapper
 builder.Services.AddAutoMapper(typeof(PirataProfile));
-app.UseMiddleware<GlobalExceptionMiddleware>();
 
-
+//Repositorios
 builder.Services.AddScoped<IPirataRepository, PirataRepository>();
 builder.Services.AddScoped<IFrutaDelDiabloRepository, FrutaDelDiabloRepository>();
 
-
+//DbContext (Conexion a la base de datos)
 builder.Services.AddDbContext<OnePieceContext>(options =>
     options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
 var app = builder.Build();
 
+//Middleware y entorno
+app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler();
-}
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+    app.UseExceptionHandler();
 }
 
 app.UseHttpsRedirection();
@@ -42,10 +48,17 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+/*
+ Seed Data
+ */
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<OnePieceContext>();
     SeedData.Initialize(context);
 }
+
+
+
 app.Run();

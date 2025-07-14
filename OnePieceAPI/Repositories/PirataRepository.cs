@@ -16,23 +16,24 @@ namespace OnePieceAPI.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Pirata>> GetAllPiratasAsync(int page, int pageSize)
+        public async Task<IEnumerable<Pirata>> GetAllAsync(int page, int pageSize)
         {
             return await _context.Piratas.OrderBy(p => p.Nombre).Skip((page - 1 ) * pageSize).Take(pageSize).ToListAsync();
         }
 
-        public async Task<Pirata?> GetPirataAsync(int pirataId)
+        public async Task<Pirata?> GetAsync(int pirataId)
         {
             return await _context.Piratas
                 .Include(f => f.FrutaDelDiablo)
                 .FirstOrDefaultAsync(p => p.Id == pirataId);
         }
 
-        public async Task CreatePirataAsync(Pirata pirata)
+        public async Task CreateAsync(Pirata pirata)
         {
             if (pirata == null)
             {
-                throw new PirataNoEncontradoException();
+                throw new ArgumentNullException(nameof(pirata), "El pirata no puede ser nulo.");
+
             }
             if (pirata.FrutaDelDiabloId.HasValue)
             {
@@ -46,27 +47,39 @@ namespace OnePieceAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Pirata?> UpdatePirataAsync(int id, Pirata pirata)
+        public async Task<Pirata?> UpdateAsync(int id, Pirata pirata)
         {
             if (pirata == null)
             {
-                throw new PirataNoEncontradoException();
+                throw new ArgumentNullException(nameof(pirata), "El pirata no puede ser nulo.");
             }
+
             var pirataExistente = await _context.Piratas.FindAsync(id);
             if (pirataExistente == null)
             {
                 throw new PirataNoEncontradoException(id);
             }
+
+            if (pirata.FrutaDelDiabloId.HasValue)
+            {
+                var fruta = await _context.FrutasDelDiablo.FindAsync(pirata.FrutaDelDiabloId.Value);
+                if (fruta == null)
+                {
+                    throw new FrutaNoEncontradaException(pirata.FrutaDelDiabloId.Value);
+                }
+            }
+
             pirataExistente.Nombre = pirata.Nombre;
             pirataExistente.Descripcion = pirata.Descripcion;
             pirataExistente.Recompensa = pirata.Recompensa;
             pirataExistente.FrutaDelDiabloId = pirata.FrutaDelDiabloId;
-            _context.Piratas.Update(pirataExistente);
+
             await _context.SaveChangesAsync();
             return pirataExistente;
         }
 
-        public async Task<bool> DeletePirataAsync(int id)
+
+        public async Task<bool> DeleteAsync(int id)
         {
             var pirata = await _context.Piratas.FindAsync(id);
             if (pirata == null)

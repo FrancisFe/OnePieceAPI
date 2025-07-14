@@ -25,7 +25,7 @@ namespace OnePieceAPI.Controllers
             {
                 return BadRequest("Los parámetros de paginación deben ser mayores que cero.");
             }
-            var piratas = await _pirataRepository.GetAllPiratasAsync(page,pageSize);
+            var piratas = await _pirataRepository.GetAllAsync(page,pageSize);
             return Ok(_mapper.Map<IEnumerable<PirataDto>>(piratas));
         }
 
@@ -34,7 +34,7 @@ namespace OnePieceAPI.Controllers
         {
             try
             {
-                var pirata = await _pirataRepository.GetPirataAsync(pirataId);
+                var pirata = await _pirataRepository.GetAsync(pirataId);
 
                 if (pirata!.FrutaDelDiablo != null)
                 {
@@ -56,7 +56,7 @@ namespace OnePieceAPI.Controllers
                 return BadRequest("Pirata no puede ser nulo.");
             }
             var nuevoPirata = _mapper.Map<Pirata>(pirata);
-            await _pirataRepository.CreatePirataAsync(nuevoPirata);
+            await _pirataRepository.CreateAsync(nuevoPirata);
             var pirataDto = _mapper.Map<PirataDto>(nuevoPirata);
             return CreatedAtAction(nameof(GetPirata), new { pirataId = pirataDto.Id }, pirataDto);
         }
@@ -67,7 +67,7 @@ namespace OnePieceAPI.Controllers
             {
                 return BadRequest("Pirata no puede ser nulo.");
             }
-            var pirataExistente = await _pirataRepository.UpdatePirataAsync(pirataId, _mapper.Map<Pirata>(pirata));
+            var pirataExistente = await _pirataRepository.UpdateAsync(pirataId, _mapper.Map<Pirata>(pirata));
             if (pirataExistente == null)
             {
                 return NotFound();
@@ -77,7 +77,7 @@ namespace OnePieceAPI.Controllers
         [HttpDelete("{pirataId}")]
         public async Task<IActionResult> DeletePirata(int pirataId)
         {
-            var resultado = await _pirataRepository.DeletePirataAsync(pirataId);
+            var resultado = await _pirataRepository.DeleteAsync(pirataId);
             if (!resultado)
             {
                 return NotFound("Pirata no encontrado, no se puede borrar");

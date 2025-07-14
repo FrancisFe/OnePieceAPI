@@ -4,11 +4,11 @@ namespace OnePieceAPI.Services.Interfaces
 {
     public interface IPirataRepository
     {
-        Task<IEnumerable<Pirata>> GetAllPiratasAsync(int page, int pageSize);
-        Task<Pirata?> GetPirataAsync(int id);
-        Task CreatePirataAsync(Pirata pirata);
-        Task<Pirata?> UpdatePirataAsync(int id, Pirata pirata);
-        Task<bool> DeletePirataAsync(int id);
+        Task<IEnumerable<Pirata>> GetAllAsync(int page, int pageSize);
+        Task<Pirata?> GetAsync(int id);
+        Task CreateAsync(Pirata pirata);
+        Task<Pirata?> UpdateAsync(int id, Pirata pirata);
+        Task<bool> DeleteAsync(int id);
 
     }
 }
