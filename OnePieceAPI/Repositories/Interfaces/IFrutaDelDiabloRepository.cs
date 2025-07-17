@@ -4,11 +4,11 @@ namespace OnePieceAPI.Services.Interfaces
 {
     public interface IFrutaDelDiabloRepository
     {
-        Task<List<FrutaDelDiablo>> GetAllFrutasDelDiabloAsync(int page, int pageSize);
-        Task<FrutaDelDiablo?> GetFrutaDelDiabloAsync(int id);
-        Task CreateFrutaDelDiabloAsync(FrutaDelDiablo frutaDelDiablo);
-        Task<FrutaDelDiablo?> UpdateFrutaDelDiabloAsync(int id, FrutaDelDiablo frutaDelDiablo);
-        Task<bool> DeleteFrutaDelDiabloAsync(int id);
+        Task<List<FrutaDelDiablo>> GetAllAsync(int page, int pageSize);
+        Task<FrutaDelDiablo?> GetAsync(int id);
+        Task CreateAsync(FrutaDelDiablo frutaDelDiablo);
+        Task<FrutaDelDiablo?> UpdateAsync(int id, FrutaDelDiablo frutaDelDiablo);
+        Task<bool> DeleteAsync(int id);
 
     }
 }

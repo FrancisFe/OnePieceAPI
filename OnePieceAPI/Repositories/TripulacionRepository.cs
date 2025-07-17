@@ -12,12 +12,12 @@ namespace OnePieceAPI.Repositories
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<IEnumerable<Tripulacion>> GetAllTripulacionesAsync()
+        public async Task<IEnumerable<Tripulacion>> GetAllAsync()
         {
             return await _context.Tripulaciones.OrderBy(x => x.Id).ToListAsync();
         }
 
-        public async Task<Tripulacion?> GetTripulacionByIdAsync(int id)
+        public async Task<Tripulacion?> GetByIdAsync(int id)
         {
             return await _context.Tripulaciones
                 .Include(t => t.Capitan)
@@ -25,7 +25,7 @@ namespace OnePieceAPI.Repositories
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
-        public async Task CreateTripulacionAsync(Tripulacion tripulacion)
+        public async Task CreateAsync(Tripulacion tripulacion)
         {
             if(tripulacion == null)
             {
@@ -35,7 +35,7 @@ namespace OnePieceAPI.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Tripulacion?> UpdateTripulacionAsync(int id, Tripulacion tripulacion)
+        public async Task<Tripulacion?> UpdateAsync(int id, Tripulacion tripulacion)
         {
             if(tripulacion == null)
             {
@@ -53,7 +53,7 @@ namespace OnePieceAPI.Repositories
             await _context.SaveChangesAsync();
             return tripulacionExistente;
         }
-        public async Task<bool> DeleteTripulacionAsync(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var tripulacion = await _context.Tripulaciones.FindAsync(id);
             if(tripulacion == null)
@@ -64,6 +64,9 @@ namespace OnePieceAPI.Repositories
             await _context.SaveChangesAsync();
             return true;
         }
-
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }

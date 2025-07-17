@@ -18,12 +18,18 @@ namespace OnePieceAPI.Services
 
         public async Task<IEnumerable<Pirata>> GetAllAsync(int page, int pageSize)
         {
-            return await _context.Piratas.OrderBy(p => p.Nombre).Skip((page - 1 ) * pageSize).Take(pageSize).ToListAsync();
+            return await _context.Piratas
+                .AsNoTracking()
+                .OrderBy(p => p.Nombre)
+                .Skip((page - 1 ) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
         public async Task<Pirata?> GetAsync(int pirataId)
         {
             return await _context.Piratas
+                .AsNoTracking()
                 .Include(f => f.FrutaDelDiablo)
                 .FirstOrDefaultAsync(p => p.Id == pirataId);
         }
@@ -62,7 +68,7 @@ namespace OnePieceAPI.Services
 
             if (pirata.FrutaDelDiabloId.HasValue)
             {
-                var fruta = await _context.FrutasDelDiablo.FindAsync(pirata.FrutaDelDiabloId.Value);
+                var fruta = await _context.FrutasDelDiablo.AsNoTracking().FirstOrDefaultAsync(f=> f.Id == pirata.FrutaDelDiabloId.Value);
                 if (fruta == null)
                 {
                     throw new FrutaNoEncontradaException(pirata.FrutaDelDiabloId.Value);

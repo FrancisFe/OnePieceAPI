@@ -13,17 +13,25 @@ namespace OnePieceAPI.Services
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<List<FrutaDelDiablo>> GetAllFrutasDelDiabloAsync(int page, int pageSize)
+        public async Task<List<FrutaDelDiablo>> GetAllAsync(int page, int pageSize)
         {
-            return await _context.FrutasDelDiablo.OrderBy(f => f.Id).Skip((page-1)*pageSize).Take(pageSize).ToListAsync();
+            return await _context.FrutasDelDiablo
+                .AsNoTracking()
+                .OrderBy(f => f.Id)
+                .Skip((page-1)*pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
-        public async Task<FrutaDelDiablo?> GetFrutaDelDiabloAsync(int frutaId)
+        public async Task<FrutaDelDiablo?> GetAsync(int frutaId)
         {
-            return await _context.FrutasDelDiablo.Where(f => f.Id == frutaId).FirstOrDefaultAsync();
+            return await _context.FrutasDelDiablo
+                .AsNoTracking()
+                .Where(f => f.Id == frutaId)
+                .FirstOrDefaultAsync();
         }
 
-        public async Task CreateFrutaDelDiabloAsync(FrutaDelDiablo frutaDelDiablo)
+        public async Task CreateAsync(FrutaDelDiablo frutaDelDiablo)
         {
             if (frutaDelDiablo == null)
             {
@@ -39,7 +47,7 @@ namespace OnePieceAPI.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<FrutaDelDiablo?> UpdateFrutaDelDiabloAsync(int frutaId, FrutaDelDiablo frutaDelDiablo)
+        public async Task<FrutaDelDiablo?> UpdateAsync(int frutaId, FrutaDelDiablo frutaDelDiablo)
         {
             if(frutaDelDiablo == null)
             {
@@ -58,7 +66,7 @@ namespace OnePieceAPI.Services
             await _context.SaveChangesAsync();
             return frutaExistente;
         }
-        public async Task<bool> DeleteFrutaDelDiabloAsync(int frutaId)
+        public async Task<bool> DeleteAsync(int frutaId)
         {
             var frutaExistente = await _context.FrutasDelDiablo.FindAsync(frutaId);
             if (frutaExistente == null)

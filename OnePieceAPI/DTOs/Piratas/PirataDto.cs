@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using OnePieceAPI.DTOs.FrutasDelDiablo;
+using System.ComponentModel.DataAnnotations;
 
 namespace OnePieceAPI.DTOs.Piratas
 {
@@ -8,5 +9,6 @@ namespace OnePieceAPI.DTOs.Piratas
         public string Nombre { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
         public long Recompensa { get; set; }
+        public FrutaDelDiabloDto? FrutaDelDiablo { get; set; }
     }
 }

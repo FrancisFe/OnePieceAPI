@@ -10,7 +10,7 @@ namespace OnePieceAPI.DTOs.Tripulaciones
         public long RecompensaTotal { get; set; }
         public string Capitan { get; set; } = string.Empty;
 
-        public List<string> Miembros { get; set; } = new();
+        public List<string> Miembros { get; set; } = new List<string>();
        
     }
 }

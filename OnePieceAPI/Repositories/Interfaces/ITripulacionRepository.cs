@@ -4,10 +4,11 @@ namespace OnePieceAPI.Repositories.Interfaces
 {
     public interface ITripulacionRepository
     {
-        Task<IEnumerable<Tripulacion>> GetAllTripulacionesAsync();
-        Task<Tripulacion?> GetTripulacionByIdAsync(int id);
-        Task CreateTripulacionAsync(Tripulacion tripulacion);
-        Task<Tripulacion?> UpdateTripulacionAsync(int id, Tripulacion tripulacion);
-        Task<bool> DeleteTripulacionAsync(int id);
+        Task<IEnumerable<Tripulacion>> GetAllAsync();
+        Task<Tripulacion?> GetByIdAsync(int id);
+        Task CreateAsync(Tripulacion tripulacion);
+        Task<Tripulacion?> UpdateAsync(int id, Tripulacion tripulacion);
+        Task<bool> DeleteAsync(int id);
+        Task SaveChangesAsync();
     }
 }
