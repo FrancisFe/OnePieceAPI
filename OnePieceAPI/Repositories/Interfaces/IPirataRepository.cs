@@ -1,4 +1,5 @@
-﻿using OnePieceAPI.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnePieceAPI.Models;
 
 namespace OnePieceAPI.Services.Interfaces
 {

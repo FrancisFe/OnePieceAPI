@@ -14,7 +14,7 @@ namespace OnePieceAPI.Repositories
         }
         public async Task<IEnumerable<Tripulacion>> GetAllAsync()
         {
-            return await _context.Tripulaciones.OrderBy(x => x.Id).ToListAsync();
+            return await _context.Tripulaciones.OrderBy(x => x.Id).AsNoTracking().ToListAsync();
         }
 
         public async Task<Tripulacion?> GetByIdAsync(int id)

@@ -23,14 +23,15 @@ namespace OnePieceAPI.Services
                 .OrderBy(p => p.Nombre)
                 .Skip((page - 1 ) * pageSize)
                 .Take(pageSize)
+                .Include(f => f.FrutaDelDiablo)
                 .ToListAsync();
         }
 
         public async Task<Pirata?> GetAsync(int pirataId)
         {
             return await _context.Piratas
-                .AsNoTracking()
                 .Include(f => f.FrutaDelDiablo)
+                .Include(t => t.Tripulacion)
                 .FirstOrDefaultAsync(p => p.Id == pirataId);
         }
 
@@ -79,7 +80,7 @@ namespace OnePieceAPI.Services
             pirataExistente.Descripcion = pirata.Descripcion;
             pirataExistente.Recompensa = pirata.Recompensa;
             pirataExistente.FrutaDelDiabloId = pirata.FrutaDelDiabloId;
-
+            pirataExistente.TripulacionId = pirata.TripulacionId;
             await _context.SaveChangesAsync();
             return pirataExistente;
         }

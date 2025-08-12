@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Data;
 using OnePieceAPI.Middleware;
 using OnePieceAPI.Profiles;
+using OnePieceAPI.Repositories;
+using OnePieceAPI.Repositories.Interfaces;
 using OnePieceAPI.Services;
 using OnePieceAPI.Services.Interfaces;
 
@@ -23,6 +25,9 @@ builder.Services.AddAutoMapper(typeof(PirataProfile));
 //Repositorios
 builder.Services.AddScoped<IPirataRepository, PirataRepository>();
 builder.Services.AddScoped<IFrutaDelDiabloRepository, FrutaDelDiabloRepository>();
+builder.Services.AddScoped<ITripulacionService, TripulacionService>();
+builder.Services.AddScoped<ITripulacionRepository, TripulacionRepository>();
+
 
 //DbContext (Conexion a la base de datos)
 builder.Services.AddDbContext<OnePieceContext>(options =>

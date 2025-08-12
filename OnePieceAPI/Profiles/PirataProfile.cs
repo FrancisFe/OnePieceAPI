@@ -11,6 +11,7 @@ namespace OnePieceAPI.Profiles
             CreateMap<CrearPirataDto, Pirata>();
             CreateMap<ActualizarPirataDto, Pirata>();
             CreateMap<Pirata, PirataDto>();
+            CreateMap<Pirata, PirataSimpleDto>();
         }
     }
 }

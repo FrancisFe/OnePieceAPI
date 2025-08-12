@@ -1,17 +1,12 @@
 ﻿using OnePieceAPI.DTOs.Piratas;
-using OnePieceAPI.Models;
 
 namespace OnePieceAPI.DTOs.Tripulaciones
 {
-    public class TripulacionDto
+    public class TripulacionSimpleDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
         public long RecompensaTotal { get; set; }
-        public PirataSimpleDto? Capitan { get; set; }
-
-        public List<PirataSimpleDto?> Miembros { get; set; } = new List<PirataSimpleDto?>();
-       
     }
 }

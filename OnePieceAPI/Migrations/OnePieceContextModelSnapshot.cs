@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OnePieceAPI.Data;
 
 #nullable disable
 
@@ -16,7 +15,7 @@ namespace OnePieceAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.5")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -71,11 +70,46 @@ namespace OnePieceAPI.Migrations
                     b.Property<long>("Recompensa")
                         .HasColumnType("bigint");
 
+                    b.Property<int?>("TripulacionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FrutaDelDiabloId");
 
+                    b.HasIndex("TripulacionId");
+
                     b.ToTable("Piratas");
+                });
+
+            modelBuilder.Entity("OnePieceAPI.Models.Tripulacion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CapitanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descripcion")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long>("RecompensaTotal")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CapitanId");
+
+                    b.ToTable("Tripulaciones");
                 });
 
             modelBuilder.Entity("OnePieceAPI.Models.Pirata", b =>
@@ -84,7 +118,29 @@ namespace OnePieceAPI.Migrations
                         .WithMany()
                         .HasForeignKey("FrutaDelDiabloId");
 
+                    b.HasOne("OnePieceAPI.Models.Tripulacion", "Tripulacion")
+                        .WithMany("Miembros")
+                        .HasForeignKey("TripulacionId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.Navigation("FrutaDelDiablo");
+
+                    b.Navigation("Tripulacion");
+                });
+
+            modelBuilder.Entity("OnePieceAPI.Models.Tripulacion", b =>
+                {
+                    b.HasOne("OnePieceAPI.Models.Pirata", "Capitan")
+                        .WithMany()
+                        .HasForeignKey("CapitanId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Capitan");
+                });
+
+            modelBuilder.Entity("OnePieceAPI.Models.Tripulacion", b =>
+                {
+                    b.Navigation("Miembros");
                 });
 #pragma warning restore 612, 618
         }

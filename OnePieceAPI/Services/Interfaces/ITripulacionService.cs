@@ -5,7 +5,7 @@ namespace OnePieceAPI.Services.Interfaces
 {
     public interface ITripulacionService
     {
-        Task<IEnumerable<TripulacionDto>> GetAllAsync();
+        Task<IEnumerable<TripulacionSimpleDto>> GetAllAsync();
         Task<TripulacionDto?> GetByIdAsync(int id);
         Task<TripulacionDto> CreateAsync(CrearTripulacionDto tripulacion);
         Task<TripulacionDto?> UpdateAsync(int id, ActualizarTripulacionDto tripulacion);

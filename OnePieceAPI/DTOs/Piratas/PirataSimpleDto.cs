@@ -1,18 +1,12 @@
 ﻿using OnePieceAPI.DTOs.FrutasDelDiablo;
-using OnePieceAPI.DTOs.Tripulaciones;
-using OnePieceAPI.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace OnePieceAPI.DTOs.Piratas
 {
-    public class PirataDto
+    public class PirataSimpleDto
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
         public string? Descripcion { get; set; }
         public long Recompensa { get; set; }
-        public FrutaDelDiabloDto? FrutaDelDiablo { get; set; }
-
-        public TripulacionSimpleDto? Tripulacion { get; set; }
     }
 }

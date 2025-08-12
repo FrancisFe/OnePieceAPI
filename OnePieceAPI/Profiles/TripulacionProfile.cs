@@ -11,6 +11,7 @@ namespace OnePieceAPI.Profiles
             CreateMap<CrearTripulacionDto, Tripulacion>();
             CreateMap<ActualizarTripulacionDto,Tripulacion>();
             CreateMap<Tripulacion, TripulacionDto>();
+            CreateMap<Tripulacion, TripulacionSimpleDto>();
         }
 
     }

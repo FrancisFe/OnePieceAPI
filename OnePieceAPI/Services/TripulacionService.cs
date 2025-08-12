@@ -18,10 +18,10 @@ namespace OnePieceAPI.Services
             _pirataRepository = pirataRepository ?? throw new ArgumentNullException(nameof(pirataRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
-        public async Task<IEnumerable<TripulacionDto>> GetAllAsync()
+        public async Task<IEnumerable<TripulacionSimpleDto>> GetAllAsync()
         {
             var tripulaciones = await _tripulacionRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<TripulacionDto>>(tripulaciones);
+            return _mapper.Map<IEnumerable<TripulacionSimpleDto>>(tripulaciones);
         }
 
         public async Task<TripulacionDto?> GetByIdAsync(int tripulacionId)
@@ -55,13 +55,14 @@ namespace OnePieceAPI.Services
             var tripulacion = await _tripulacionRepository.GetByIdAsync(tripulacionId) ?? throw new Exception("Tripulacion no encontrada");
             var pirata = await _pirataRepository.GetAsync(pirataId) ?? throw new PirataNoEncontradoException();
 
+            if (pirata.TripulacionId.HasValue && pirata.TripulacionId != tripulacionId)
+                throw new Exception("El pirata ya pertenece a otra tripulación.");
             if (pirata.TripulacionId == tripulacionId)
                 return _mapper.Map<TripulacionDto>(tripulacion);
             pirata.TripulacionId = tripulacionId;
             await _pirataRepository.UpdateAsync(pirata.Id, pirata);
             await UpdateRecompensaTotalAsync(tripulacionId);
-            var tripulacionActualizada = await _tripulacionRepository.GetByIdAsync(tripulacionId);
-            return _mapper.Map<TripulacionDto>(tripulacionActualizada);
+            return _mapper.Map<TripulacionDto>(tripulacion);
         }
 
         public async Task<TripulacionDto?> RemovePirataAsync(int tripulacionId, int pirataId)
@@ -75,8 +76,8 @@ namespace OnePieceAPI.Services
             pirata.TripulacionId = null;
             await _pirataRepository.UpdateAsync(pirata.Id, pirata);
             await UpdateRecompensaTotalAsync(tripulacionId);
-            var tripulacionActualizada = await _tripulacionRepository.GetByIdAsync(tripulacionId);
-            return _mapper.Map<TripulacionDto>(tripulacionActualizada);
+            
+            return _mapper.Map<TripulacionDto>(tripulacion);
         }
 
 

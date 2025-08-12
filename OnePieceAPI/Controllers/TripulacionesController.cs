@@ -17,7 +17,7 @@ namespace OnePieceAPI.Controllers
 
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TripulacionDto?>>> GetAllTripulaciones()
+        public async Task<ActionResult<IEnumerable<TripulacionSimpleDto?>>> GetAllTripulaciones()
         {
             var tripulaciones = await _tripulacionService.GetAllAsync();
             return Ok(tripulaciones);
@@ -70,6 +70,20 @@ namespace OnePieceAPI.Controllers
                 return NotFound($"No se encontró la tripulación con ID {tripulacionId}.");
             }
             return NoContent();
+        }
+
+        [HttpPut("{tripulacionId}/agregar-pirata/{pirataId}")]
+        public async Task<ActionResult<TripulacionDto>> AgregarPirata(int tripulacionId, int pirataId)
+        {
+           var tripulacion =  await _tripulacionService.AddPirataAsync(tripulacionId, pirataId);
+            return Ok(tripulacion);
+        }
+
+        [HttpDelete("{tripulacionId}/borrar-pirata/{pirataId}")]
+        public async Task<ActionResult<TripulacionDto>> BorrarPirata(int tripulacionId , int pirataId)
+        {
+            var tripulacion = await _tripulacionService.RemovePirataAsync(tripulacionId, pirataId);
+            return Ok(tripulacion);
         }
 
     }
