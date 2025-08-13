@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.Entities;
 
 public class OnePieceContext : DbContext
 {

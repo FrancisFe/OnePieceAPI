@@ -1,7 +1,7 @@
-﻿using OnePieceAPI.DTOs.Piratas;
-using OnePieceAPI.Models;
+﻿using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Piratas;
 
-namespace OnePieceAPI.DTOs.Tripulaciones
+namespace OnePieceAPI.Models.DTOs.Tripulaciones
 {
     public class TripulacionDto
     {

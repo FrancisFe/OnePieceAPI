@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OnePieceAPI.Models
+namespace OnePieceAPI.Models.Entities
 {
     public class Tripulacion
     {

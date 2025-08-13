@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OnePieceAPI.DTOs.Tripulaciones;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Tripulaciones;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Controllers

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Data;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Repositories.Interfaces;
 
 namespace OnePieceAPI.Repositories

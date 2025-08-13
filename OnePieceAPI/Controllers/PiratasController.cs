@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OnePieceAPI.DTOs.Piratas;
 using OnePieceAPI.Exceptions.Piratas;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Piratas;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 

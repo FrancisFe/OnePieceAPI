@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OnePieceAPI.DTOs.Tripulaciones;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Tripulaciones;
+using OnePieceAPI.Models.Entities;
 
 namespace OnePieceAPI.Profiles
 {

@@ -1,5 +1,5 @@
-﻿using OnePieceAPI.DTOs.Tripulaciones;
-using OnePieceAPI.Models;
+﻿using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Tripulaciones;
 
 namespace OnePieceAPI.Services.Interfaces
 {

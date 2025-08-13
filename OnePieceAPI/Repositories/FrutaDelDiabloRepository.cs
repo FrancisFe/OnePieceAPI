@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Data;
 using OnePieceAPI.Exceptions.FrutasDelDiablo;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Services

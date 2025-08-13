@@ -1,4 +1,4 @@
-﻿using OnePieceAPI.Models;
+﻿using OnePieceAPI.Models.Entities;
 
 namespace OnePieceAPI.Services.Interfaces
 {

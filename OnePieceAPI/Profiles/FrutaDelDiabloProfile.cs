@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OnePieceAPI.DTOs.FrutasDelDiablo;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.FrutasDelDiablo;
+using OnePieceAPI.Models.Entities;
 
 namespace OnePieceAPI.Profiles
 {

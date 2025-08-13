@@ -2,7 +2,7 @@
 using OnePieceAPI.Data;
 using OnePieceAPI.Exceptions.FrutasDelDiablo;
 using OnePieceAPI.Exceptions.Piratas;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Services

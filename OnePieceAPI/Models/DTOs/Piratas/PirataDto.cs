@@ -1,9 +1,9 @@
-﻿using OnePieceAPI.DTOs.FrutasDelDiablo;
-using OnePieceAPI.DTOs.Tripulaciones;
-using OnePieceAPI.Models;
+﻿using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.FrutasDelDiablo;
+using OnePieceAPI.Models.DTOs.Tripulaciones;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnePieceAPI.DTOs.Piratas
+namespace OnePieceAPI.Models.DTOs.Piratas
 {
     public class PirataDto
     {

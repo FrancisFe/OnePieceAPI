@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using OnePieceAPI.DTOs.Piratas;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Piratas;
+using OnePieceAPI.Models.Entities;
 
 namespace OnePieceAPI.Profiles
 {

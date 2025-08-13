@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnePieceAPI.DTOs.Tripulaciones
+namespace OnePieceAPI.Models.DTOs.Tripulaciones
 {
-    public class ActualizarTripulacionDto
+    public class CrearTripulacionDto
     {
         [Required(ErrorMessage = "El nombre es obligatorio")]
         [StringLength(100, ErrorMessage = "El nombre no puede exceder los 100 caracteres")]
@@ -11,8 +11,7 @@ namespace OnePieceAPI.DTOs.Tripulaciones
         [StringLength(1000, ErrorMessage = "La descripción no puede exceder los 1000 caracteres")]
         public string? Descripcion { get; set; }
 
-        [Range(0, long.MaxValue, ErrorMessage = "La recompensa total debe ser un número positivo")]
-
         public int? CapitanId { get; set; }
+
     }
 }

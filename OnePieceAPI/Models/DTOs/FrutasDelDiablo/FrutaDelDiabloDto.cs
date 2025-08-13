@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnePieceAPI.DTOs.FrutasDelDiablo
+namespace OnePieceAPI.Models.DTOs.FrutasDelDiablo
 {
     public class FrutaDelDiabloDto
     {

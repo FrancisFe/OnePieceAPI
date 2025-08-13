@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using OnePieceAPI.DTOs.Tripulaciones;
 using OnePieceAPI.Exceptions.Piratas;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.Tripulaciones;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Repositories.Interfaces;
 using OnePieceAPI.Services.Interfaces;
 

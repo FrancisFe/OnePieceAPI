@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OnePieceAPI.DTOs.FrutasDelDiablo;
-using OnePieceAPI.Models;
+using OnePieceAPI.Models.DTOs.FrutasDelDiablo;
+using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 using System.ComponentModel.DataAnnotations;
 

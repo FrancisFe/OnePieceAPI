@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OnePieceAPI.DTOs.Piratas
+namespace OnePieceAPI.Models.DTOs.Piratas
 {
     public class CrearPirataDto
     {
