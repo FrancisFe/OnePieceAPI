@@ -25,8 +25,11 @@ builder.Services.AddAutoMapper(typeof(PirataProfile));
 //Repositorios
 builder.Services.AddScoped<IPirataRepository, PirataRepository>();
 builder.Services.AddScoped<IFrutaDelDiabloRepository, FrutaDelDiabloRepository>();
-builder.Services.AddScoped<ITripulacionService, TripulacionService>();
 builder.Services.AddScoped<ITripulacionRepository, TripulacionRepository>();
+
+//Services
+builder.Services.AddScoped<ITripulacionService, TripulacionService>();
+builder.Services.AddScoped<IPirataService, PirataService>();
 
 
 //DbContext (Conexion a la base de datos)

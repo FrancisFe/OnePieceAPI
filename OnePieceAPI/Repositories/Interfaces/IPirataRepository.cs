@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Models.Entities;
 
-namespace OnePieceAPI.Services.Interfaces
+namespace OnePieceAPI.Repositories.Interfaces
 {
     public interface IPirataRepository
     {
-        Task<IEnumerable<Pirata>> GetAllAsync(int page, int pageSize);
+        IQueryable<Pirata> GetQueryable();
         Task<Pirata?> GetAsync(int id);
         Task CreateAsync(Pirata pirata);
         Task<Pirata?> UpdateAsync(int id, Pirata pirata);

@@ -9,5 +9,6 @@ namespace OnePieceAPI.Models.DTOs.FrutasDelDiablo
         public string Tipo { get; set; } = string.Empty;
 
 
+
     }
 }

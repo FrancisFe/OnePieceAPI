@@ -3,7 +3,7 @@ using OnePieceAPI.Data;
 using OnePieceAPI.Exceptions.FrutasDelDiablo;
 using OnePieceAPI.Exceptions.Piratas;
 using OnePieceAPI.Models.Entities;
-using OnePieceAPI.Services.Interfaces;
+using OnePieceAPI.Repositories.Interfaces;
 
 namespace OnePieceAPI.Services
 {
@@ -16,15 +16,12 @@ namespace OnePieceAPI.Services
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<IEnumerable<Pirata>> GetAllAsync(int page, int pageSize)
+        public IQueryable<Pirata> GetQueryable()
         {
-            return await _context.Piratas
-                .AsNoTracking()
-                .OrderBy(p => p.Nombre)
-                .Skip((page - 1 ) * pageSize)
-                .Take(pageSize)
-                .Include(f => f.FrutaDelDiablo)
-                .ToListAsync();
+            return _context.Piratas
+                .Include(p => p.FrutaDelDiablo)
+                .Include(p => p.Tripulacion)
+                .AsNoTracking();
         }
 
         public async Task<Pirata?> GetAsync(int pirataId)
@@ -44,8 +41,8 @@ namespace OnePieceAPI.Services
             }
             if (pirata.FrutaDelDiabloId.HasValue)
             {
-                var fruta = await _context.FrutasDelDiablo.FindAsync(pirata.FrutaDelDiabloId.Value);
-                if (fruta == null)
+                var frutaExiste = await _context.FrutasDelDiablo.AnyAsync(f=> f.Id == pirata.FrutaDelDiabloId.Value);
+                if (!frutaExiste)
                 {
                     throw new FrutaNoEncontradaException(pirata.FrutaDelDiabloId.Value);
                 }
