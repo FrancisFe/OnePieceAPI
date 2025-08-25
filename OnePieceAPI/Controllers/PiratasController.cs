@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using OnePieceAPI.Exceptions.Piratas;
+using OnePieceAPI.Models.Common;
 using OnePieceAPI.Models.DTOs.Piratas;
 using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
-using System.ComponentModel.DataAnnotations;
+
+
 
 namespace OnePieceAPI.Controllers
 {
@@ -12,12 +13,10 @@ namespace OnePieceAPI.Controllers
     [Route("api/[controller]")]
     public class PiratasController : ControllerBase
     {
-        private readonly IPirataRepository _pirataRepository;
-        private readonly IMapper _mapper;
-        public PiratasController(IPirataRepository pirataRepository, IMapper mapper)
+        private readonly IPirataService _pirataService;
+        public PiratasController(IPirataService pirataService)
         {
-            _pirataRepository = pirataRepository ?? throw new ArgumentNullException(nameof(pirataRepository));
-            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _pirataService = pirataService ?? throw new ArgumentNullException(nameof(pirataService));
         }
 
         /// <summary>
@@ -26,14 +25,13 @@ namespace OnePieceAPI.Controllers
         /// <param name="page">Número de página (minimo 1)</param>
         /// <param name="pageSize">Tamaño de pagina (minimo 1)</param>
         /// <returns>Una lista paginada de los piratas</returns>
-        [ProducesResponseType(typeof(IEnumerable<PirataDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedResult<PirataDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PirataDto>>> GetAllPiratas([Range(1, int.MaxValue)] int page = 1,
-            [Range(1, 100)] int pageSize = 5)
+        public async Task<ActionResult<PagedResult<PirataDto>>> GetAllPiratas([FromQuery]PirataFiltrosDto filtros)
         {
-            var piratas = await _pirataRepository.GetAllAsync(page, pageSize);
-            return Ok(_mapper.Map<IEnumerable<PirataDto>>(piratas));
+            var piratas = await _pirataService.GetPirataConFiltrosAsync(filtros);
+            return Ok(piratas);
         }
         /// <summary>
         /// Obtiene un pirata en especifico por su ID
@@ -46,12 +44,12 @@ namespace OnePieceAPI.Controllers
         [HttpGet("{pirataId}")]
         public async Task<ActionResult<PirataDto>> GetPirata(int pirataId)
         {
-            var pirata = await _pirataRepository.GetAsync(pirataId);
+            var pirata = await _pirataService.GetByIdAsync(pirataId);
             if (pirata == null)
             {
                 return NotFound(new { error = "Pirata no encontrado." });
             }
-            return Ok(_mapper.Map<PirataDto>(pirata));
+            return Ok(pirata);
 
         }
 
@@ -68,10 +66,8 @@ namespace OnePieceAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var nuevoPirata = _mapper.Map<Pirata>(pirata);
-            await _pirataRepository.CreateAsync(nuevoPirata);
-            var pirataDto = _mapper.Map<PirataDto>(nuevoPirata);
-            return CreatedAtAction(nameof(GetPirata), new { pirataId = pirataDto.Id }, pirataDto);
+            var pirataNuevo = await _pirataService.CreateAsync(pirata);
+            return CreatedAtAction(nameof(GetPirata), new { pirataId = pirataNuevo?.Id }, pirataNuevo);
         }
         /// <summary>
         /// Actualiza un pirata existente
@@ -87,12 +83,12 @@ namespace OnePieceAPI.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var pirataExistente = await _pirataRepository.UpdateAsync(pirataId, _mapper.Map<Pirata>(pirata));
+            var pirataExistente = await _pirataService.UpdateAsync(pirataId, pirata);
             if (pirataExistente == null)
             {
                 return NotFound(new { error = "Pirata no encontrado." });
             }
-            return Ok(_mapper.Map<PirataDto>(pirataExistente));
+            return Ok(pirataExistente);
         }
 
         /// <summary>
@@ -105,7 +101,7 @@ namespace OnePieceAPI.Controllers
         [HttpDelete("{pirataId}")]
         public async Task<IActionResult> DeletePirata(int pirataId)
         {
-            var resultado = await _pirataRepository.DeleteAsync(pirataId);
+            var resultado = await _pirataService.DeleteAsync(pirataId);
             if (!resultado)
                 return NotFound(new { error = "Pirata no encontrado, no se puede borrar." });
 

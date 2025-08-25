@@ -1,6 +1,4 @@
-﻿using OnePieceAPI.DTOs.FrutasDelDiablo;
-
-namespace OnePieceAPI.Models.DTOs.Piratas
+﻿namespace OnePieceAPI.Models.DTOs.Piratas
 {
     public class PirataSimpleDto
     {
