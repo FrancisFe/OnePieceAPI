@@ -4,7 +4,7 @@ using OnePieceAPI.Exceptions.FrutasDelDiablo;
 using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 
-namespace OnePieceAPI.Services
+namespace OnePieceAPI.Repositories
 {
     public class FrutaDelDiabloRepository : IFrutaDelDiabloRepository
     {

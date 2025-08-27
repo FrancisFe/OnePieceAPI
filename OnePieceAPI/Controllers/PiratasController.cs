@@ -1,8 +1,6 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnePieceAPI.Models.Common;
 using OnePieceAPI.Models.DTOs.Piratas;
-using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
 
 
@@ -22,9 +20,6 @@ namespace OnePieceAPI.Controllers
         /// <summary>
         /// Obtiene todos los piratas con paginación
         /// </summary>
-        /// <param name="page">Número de página (minimo 1)</param>
-        /// <param name="pageSize">Tamaño de pagina (minimo 1)</param>
-        /// <returns>Una lista paginada de los piratas</returns>
         [ProducesResponseType(typeof(PagedResult<PirataDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
         [HttpGet]
@@ -34,7 +29,7 @@ namespace OnePieceAPI.Controllers
             return Ok(piratas);
         }
         /// <summary>
-        /// Obtiene un pirata en especifico por su ID
+        /// Obtiene un pirata en específico por su ID
         /// </summary>
         /// <param name="pirataId">ID del pirata</param>
         /// <returns>Datos del pirata</returns>

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35931.197 d17.13
+VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnePieceAPI", "OnePieceAPI\OnePieceAPI.csproj", "{882BE4D7-340F-47E2-ACFD-929F05A717D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnePieceAPI.Tests", "OnePieceAPI.Tests\OnePieceAPI.Tests.csproj", "{2E241416-F8B7-4CC4-958A-6A2FC1A472A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{882BE4D7-340F-47E2-ACFD-929F05A717D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{882BE4D7-340F-47E2-ACFD-929F05A717D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{882BE4D7-340F-47E2-ACFD-929F05A717D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E241416-F8B7-4CC4-958A-6A2FC1A472A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E241416-F8B7-4CC4-958A-6A2FC1A472A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E241416-F8B7-4CC4-958A-6A2FC1A472A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E241416-F8B7-4CC4-958A-6A2FC1A472A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

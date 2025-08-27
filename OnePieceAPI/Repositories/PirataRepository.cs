@@ -5,7 +5,7 @@ using OnePieceAPI.Exceptions.Piratas;
 using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Repositories.Interfaces;
 
-namespace OnePieceAPI.Services
+namespace OnePieceAPI.Repositories
 {
     public class PirataRepository : IPirataRepository
     {

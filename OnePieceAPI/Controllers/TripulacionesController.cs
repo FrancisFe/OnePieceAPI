@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnePieceAPI.Models.DTOs.Tripulaciones;
 using OnePieceAPI.Models.Entities;
 using OnePieceAPI.Services.Interfaces;
@@ -48,7 +47,7 @@ namespace OnePieceAPI.Controllers
         [HttpPut("{tripulacionId}")]
         public async Task<ActionResult<Tripulacion?>> UpdateTripulacion(int tripulacionId, ActualizarTripulacionDto tripulacion)
         {
-            if (tripulacion == null || !ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest("Tripulacion no puede ser nula");
             }

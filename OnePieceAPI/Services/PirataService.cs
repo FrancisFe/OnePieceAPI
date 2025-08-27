@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Models.Common;
 using OnePieceAPI.Models.DTOs.Piratas;
@@ -11,8 +10,8 @@ namespace OnePieceAPI.Services
 {
     public class PirataService : IPirataService
     {
-        public readonly IPirataRepository _pirataRepository;
-        public readonly IMapper _mapper;
+        private readonly IPirataRepository _pirataRepository;
+        private readonly IMapper _mapper;
         public PirataService(IPirataRepository pirataRepository, IMapper mapper)
         {
             _pirataRepository = pirataRepository ?? throw new ArgumentNullException(nameof(pirataRepository));
@@ -34,14 +33,7 @@ namespace OnePieceAPI.Services
 
             if (filtros.PiratasConFruta.HasValue)
             {
-                if (filtros.PiratasConFruta.Value)
-                {
-                    query = query.Where(p => p.FrutaDelDiablo != null);
-                }
-                else
-                {
-                    query = query.Where(p => p.FrutaDelDiablo == null);
-                }
+                query = filtros.PiratasConFruta.Value ? query.Where(p => p.FrutaDelDiablo != null) : query.Where(p => p.FrutaDelDiablo == null);
             }
             if(!string.IsNullOrWhiteSpace(filtros.TipoFrutaNombre))
             {
@@ -101,7 +93,7 @@ namespace OnePieceAPI.Services
             var pirataEntrante = _mapper.Map<Pirata>(pirata);
             var pirataExistente =await _pirataRepository.UpdateAsync(id, pirataEntrante);
             var pirataConDto = _mapper.Map<PirataDto>(pirataExistente);
-            return pirataConDto != null ? pirataConDto : null;
+            return pirataConDto;
         }
         public async Task<bool> DeleteAsync(int id)
         {

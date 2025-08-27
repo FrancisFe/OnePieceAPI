@@ -1,8 +1,8 @@
-﻿using OnePieceAPI.Exceptions.Common;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
+using OnePieceAPI.Exceptions.Common;
 
-namespace OnePieceAPI.Middleware
+namespace OnePieceAPI.Exceptions
 {
     public class GlobalExceptionMiddleware
     {

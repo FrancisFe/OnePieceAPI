@@ -41,7 +41,7 @@ namespace OnePieceAPI.Services
             var tripulacionEntrante = _mapper.Map<Tripulacion>(tripulacion);
             var tripulacionExistente = await _tripulacionRepository.UpdateAsync(tripulacionId, tripulacionEntrante);
             var tripulacionDto = _mapper.Map<TripulacionDto>(tripulacionExistente);
-            return tripulacionDto != null ? tripulacionDto : null;
+            return tripulacionDto;
         }
 
 

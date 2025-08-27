@@ -23,8 +23,8 @@ namespace OnePieceAPI.Controllers
         /// <summary>
         /// Obtiene todas las frutas del diablo con paginación
         /// </summary>
-        /// <param name="page">Número de página (minimo 1)</param>
-        /// <param name="pageSize">Tamaño de pagina (minimo 1)</param>
+        /// <param name="page">Número de página (mínimo 1)</param>
+        /// <param name="pageSize">Tamaño de pagina (mínimo 1)</param>
         /// <returns>Una lista paginada de frutas del diablo</returns>
         [ProducesResponseType(typeof(IEnumerable<FrutaDelDiabloDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
@@ -36,7 +36,7 @@ namespace OnePieceAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<FrutaDelDiabloDto>>(frutas));
         }
         /// <summary>
-        /// Obtiene una fruta del diablo en especifico por su ID
+        /// Obtiene una fruta del diablo en específico por su ID
         /// </summary>
         /// <param name="frutaId">ID de la fruta del diablo</param>
         /// <returns>Datos de la fruta del diablo</returns>
@@ -75,7 +75,7 @@ namespace OnePieceAPI.Controllers
         /// <summary>
         /// Actualiza una fruta del diablo existente
         /// </summary>
-        /// <param name="frutaId">ID de la fruta del diablo a actualizar</param>
+        /// <param name="frutaId">Id de la fruta del diablo a actualizar</param>
         /// <param name="frutaDelDiablo">Datos actualizados de la fruta del diablo</param>
         /// <returns>Fruta del diablo actualizada</returns>
         [ProducesResponseType(typeof(FrutaDelDiabloDto), StatusCodes.Status200OK)]
@@ -84,10 +84,7 @@ namespace OnePieceAPI.Controllers
         [HttpPut("{frutaId}")]
         public async Task<ActionResult<FrutaDelDiablo?>> UpdateFrutaDelDiablo(int frutaId, ActualizarFrutaDelDiabloDto frutaDelDiablo)
         {
-            if (frutaDelDiablo == null)
-            {
-                return BadRequest("Fruta del diablo no puede ser null");
-            }
+      
             var frutaActualizada = await _frutaDelDiabloRepository.UpdateAsync(frutaId, _mapper.Map<FrutaDelDiablo>(frutaDelDiablo));
             if (frutaActualizada == null)
             {

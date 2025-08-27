@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Models.Entities;
 
-public class OnePieceContext : DbContext
-{
-    public OnePieceContext(DbContextOptions<OnePieceContext> options) : base(options) { }
+namespace OnePieceAPI.Data;
 
+public class OnePieceContext(DbContextOptions<OnePieceContext> options) : DbContext(options)
+{
     public DbSet<Pirata> Piratas { get; set; }
     public DbSet<FrutaDelDiablo> FrutasDelDiablo { get; set; }
     public DbSet<Tripulacion> Tripulaciones { get; set; }

@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using OnePieceAPI.Data;
-using OnePieceAPI.Middleware;
+using OnePieceAPI.Exceptions;
 using OnePieceAPI.Profiles;
 using OnePieceAPI.Repositories;
 using OnePieceAPI.Repositories.Interfaces;
@@ -9,7 +9,7 @@ using OnePieceAPI.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 /*
-Configuración de servicios
+Configuraciï¿½n de servicios
  */
 
 //Controladores

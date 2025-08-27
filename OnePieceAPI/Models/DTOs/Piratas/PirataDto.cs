@@ -1,7 +1,7 @@
-﻿using OnePieceAPI.Models;
+﻿
 using OnePieceAPI.Models.DTOs.FrutasDelDiablo;
 using OnePieceAPI.Models.DTOs.Tripulaciones;
-using System.ComponentModel.DataAnnotations;
+
 
 namespace OnePieceAPI.Models.DTOs.Piratas
 {
