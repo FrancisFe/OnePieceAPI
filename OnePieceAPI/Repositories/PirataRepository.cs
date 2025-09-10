@@ -72,12 +72,10 @@ namespace OnePieceAPI.Repositories
                     throw new FrutaNoEncontradaException(pirata.FrutaDelDiabloId.Value);
                 }
             }
-
             pirataExistente.Nombre = pirata.Nombre;
             pirataExistente.Descripcion = pirata.Descripcion;
             pirataExistente.Recompensa = pirata.Recompensa;
             pirataExistente.FrutaDelDiabloId = pirata.FrutaDelDiabloId;
-            pirataExistente.TripulacionId = pirata.TripulacionId;
             await _context.SaveChangesAsync();
             return pirataExistente;
         }

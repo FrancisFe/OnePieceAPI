@@ -7,7 +7,7 @@ using OnePieceAPI.Services.Interfaces;
 
 namespace OnePieceAPI.Services
 {
-    public class TripulacionService : ITripulacionService
+    public class TripulacionService : ITripulacionService , IRecompensaTotalUpdater
     {
         private readonly ITripulacionRepository _tripulacionRepository;
         private readonly IPirataRepository _pirataRepository;

@@ -11,6 +11,6 @@ namespace OnePieceAPI.Services.Interfaces
         Task<bool> DeleteAsync(int id);
         Task<TripulacionDto?> AddPirataAsync(int tripulacionId, int pirataId);
         Task<TripulacionDto?> RemovePirataAsync(int tripulacionId, int pirataId);
-        Task UpdateRecompensaTotalAsync(int tripulacionId);
+        
     }
 }

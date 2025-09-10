@@ -30,7 +30,7 @@ builder.Services.AddScoped<ITripulacionRepository, TripulacionRepository>();
 //Services
 builder.Services.AddScoped<ITripulacionService, TripulacionService>();
 builder.Services.AddScoped<IPirataService, PirataService>();
-
+builder.Services.AddScoped<IRecompensaTotalUpdater, TripulacionService>();
 
 //DbContext (Conexion a la base de datos)
 builder.Services.AddDbContext<OnePieceContext>(options =>

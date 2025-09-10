@@ -12,10 +12,12 @@ namespace OnePieceAPI.Services
     {
         private readonly IPirataRepository _pirataRepository;
         private readonly IMapper _mapper;
-        public PirataService(IPirataRepository pirataRepository, IMapper mapper)
+        private readonly IRecompensaTotalUpdater _recompensaTotalUpdater;
+        public PirataService(IPirataRepository pirataRepository, IMapper mapper, IRecompensaTotalUpdater recompensaTotalUpdater)
         {
             _pirataRepository = pirataRepository ?? throw new ArgumentNullException(nameof(pirataRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _recompensaTotalUpdater = recompensaTotalUpdater ?? throw new ArgumentNullException(nameof(recompensaTotalUpdater));
         }
         public async Task<PagedResult<PirataDto>> GetPirataConFiltrosAsync(PirataFiltrosDto filtros)
         {
@@ -85,20 +87,31 @@ namespace OnePieceAPI.Services
         public async Task<PirataDto?> CreateAsync(CrearPirataDto pirata)
         {
             var pirataNuevo = _mapper.Map<Pirata>(pirata);
+            
             await _pirataRepository.CreateAsync(pirataNuevo);
             return _mapper.Map<PirataDto>(pirataNuevo);
         }
         public async Task<PirataDto?> UpdateAsync(int id, ActualizarPirataDto pirata)
         {
+            var pirataComparar = await _pirataRepository.GetAsync(id);
+            if(pirataComparar == null)
+                return null;
+        
+            decimal recompensaOriginal = pirataComparar.Recompensa;
             var pirataEntrante = _mapper.Map<Pirata>(pirata);
-            var pirataExistente =await _pirataRepository.UpdateAsync(id, pirataEntrante);
-            var pirataConDto = _mapper.Map<PirataDto>(pirataExistente);
-            return pirataConDto;
+    
+            var pirataActualizado = await _pirataRepository.UpdateAsync(id, pirataEntrante);
+    
+            if(recompensaOriginal != pirataActualizado!.Recompensa && pirataActualizado.TripulacionId.HasValue)
+                await _recompensaTotalUpdater.UpdateRecompensaTotalAsync(pirataActualizado.TripulacionId.Value);
+        
+            return _mapper.Map<PirataDto>(pirataActualizado);
         }
         public async Task<bool> DeleteAsync(int id)
         {
             return await _pirataRepository.DeleteAsync(id);
         }
+
 
     }
 }
