@@ -34,7 +34,8 @@ builder.Services.AddScoped<IRecompensaTotalUpdater, TripulacionService>();
 
 //DbContext (Conexion a la base de datos)
 builder.Services.AddDbContext<OnePieceContext>(options =>
-    options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+    options.UseNpgsql(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+
 
 var app = builder.Build();
 
